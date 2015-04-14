@@ -18,7 +18,7 @@ public class Main {
     }
 
     private void execute() {
-        connect(Driver.class.getName(), "jdbc:laufer", "", "");
+        connect(Driver.class.getName(), "jdbc:laufer:db", "", "");
     }
 
     public void connect(String driverName, String url, String username, String password) {

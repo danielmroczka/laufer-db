@@ -1,5 +1,7 @@
 package com.labs.dm.lauferdb.core.jdbc;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -18,6 +20,8 @@ import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,7 +29,15 @@ import java.util.concurrent.Executor;
  */
 public class JdbcConnection implements Connection {
 
-    public JdbcConnection(String url, Properties info) {
+   // private final String url;
+
+    public JdbcConnection(String url, Properties info)  {
+        try {
+            String name = new ConnectionParser(url).getName();
+            createFileIfAbsent(name);
+        } catch (IOException ex) {
+            Logger.getLogger(JdbcConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -296,6 +308,13 @@ public class JdbcConnection implements Connection {
     @Override
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void createFileIfAbsent(String name) throws IOException {
+        File file = new File(name);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
     }
 
 }

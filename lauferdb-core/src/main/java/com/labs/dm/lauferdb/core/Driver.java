@@ -16,6 +16,8 @@ import java.util.logging.Logger;
  */
 public class Driver implements java.sql.Driver {
 
+    public static String URL_PREFIX = "jdbc:laufer:";
+    
     static {
         load();
     }
@@ -42,7 +44,7 @@ public class Driver implements java.sql.Driver {
 
     @Override
     public boolean acceptsURL(String url) throws SQLException {
-        return url.startsWith("jdbc:laufer");
+        return url.startsWith(URL_PREFIX);
     }
 
     @Override
